@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace | quote }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+       app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+        - image: "leonpatmore2/wiki-search:latest-amd"
+          name: {{ .Release.Name }}
+          ports:
+            - name: app
+              containerPort: 7860
+          volumeMounts:
+            - mountPath: "/app/docs"
+              name: docs
+              readOnly: true
+      volumes:
+        - name: docs
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-docs

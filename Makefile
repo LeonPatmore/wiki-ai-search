@@ -10,3 +10,6 @@ build:
 
 run:
 	docker run -P -v ${ROOT_DIR}/entire_docs:/app/entire_docs -v ${ROOT_DIR}/docs:/app/docs -e OPENAI_API_KEY=${OPENAI_API_KEY} leonpatmore2/wiki-search
+
+push:
+	docker push leonpatmore2/wiki-search
