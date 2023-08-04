@@ -2,3 +2,4 @@
 docs
 entire_docs
 .idea
+**/*.pyc
