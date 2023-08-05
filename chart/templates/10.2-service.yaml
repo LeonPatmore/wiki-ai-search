@@ -8,6 +8,9 @@ spec:
   selector:
     app: {{ .Release.Name }}
   ports:
-    - name: app
+    - name: web-interface
       port: 7860
       targetPort: 7860
+    - name: rest-api
+      port: 8080
+      targetPort: 8080

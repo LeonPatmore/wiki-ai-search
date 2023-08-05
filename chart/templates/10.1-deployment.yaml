@@ -17,8 +17,10 @@ spec:
         - image: "leonpatmore2/wiki-search:latest-amd"
           name: {{ .Release.Name }}
           ports:
-            - name: app
+            - name: web-interface
               containerPort: 7860
+            - name: rest-api
+              containerPort: 8080
           volumeMounts:
             - mountPath: "/app/docs"
               name: docs

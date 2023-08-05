@@ -7,7 +7,7 @@ metadata:
     kubernetes.io/ingress.class: ingress-controller-internal-nginx
 spec:
   rules:
-    - host: {{ .Values.host }}
+    - host: {{ .Values.restApiHost }}
       http:
         paths:
           - path: /
@@ -16,4 +16,4 @@ spec:
               service:
                 name: {{ .Release.Name }}
                 port:
-                  number: 7860
+                  number: 8080
