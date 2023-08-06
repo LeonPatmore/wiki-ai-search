@@ -14,14 +14,17 @@ spec:
         app: {{ .Release.Name }}
     spec:
       containers:
-        - image: "leonpatmore2/wiki-search:latest-amd"
+        - image: "leonpatmore2/wiki-search:{{ .Values.tag }}"
           name: {{ .Release.Name }}
+          env:
+            - name: OPENAI_API_KEY
+              value: {{ .Values.openAiApiKey }}
           ports:
             - name: web-interface
               containerPort: 8080
             - name: rest-api
               containerPort: 8082
-            - name: slack-event-listener
+            - name: slack-listener
               containerPort: 8084
           volumeMounts:
             - mountPath: "/app/docs"

@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ .Release.Name }}
+  name: {{ .Release.Name }}-rest-api
   namespace: {{ .Release.Namespace | quote }}
   annotations:
     kubernetes.io/ingress.class: ingress-controller-internal-nginx
