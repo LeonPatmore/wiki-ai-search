@@ -1,7 +1,5 @@
 import logging
 import os
-import sys
-from threading import Thread
 
 from slack_sdk import WebClient
 
@@ -23,25 +21,20 @@ wiki_search = AiSearch(query_engine)
 SlackHandler.wiki_search = wiki_search
 SlackHandler.channel = os.environ.get("SLACK_CHANNEL")
 SlackHandler.slack_client = WebClient(token=os.environ.get("SLACK_TOKEN"))
-slack_web_server = WebServer(BASE_PORT + 4, SlackHandler)
-slack_thread = Thread(target=slack_web_server)
+slack_web_server = WebServer("slack-server", BASE_PORT + 4, SlackHandler)
 
 RestHandler.wiki_search = wiki_search
-rest_api_server = WebServer(BASE_PORT + 2, RestHandler)
-rest_api_thread = Thread(target=rest_api_server)
+rest_api_server = WebServer("rest-api", BASE_PORT + 2, RestHandler)
 
 web_interface = WebInterface(wiki_search, BASE_PORT)
-web_interface_thread = Thread(target=web_interface)
+
+slack_web_server.start()
+rest_api_server.start()
 
 try:
-    slack_thread.start()
-    rest_api_thread.start()
-    # web_interface_thread.start()
-except (KeyboardInterrupt, SystemExit):
-    logging.info("Killing threads")
-    slack_thread.join(timeout=5000)
-    rest_api_thread.join(timeout=5000)
-    sys.exit()
-
-if __name__ == '__main__':
+    web_interface.run()
+except KeyboardInterrupt:
     pass
+finally:
+    slack_web_server.join(timeout=5)
+    rest_api_server.join(timeout=5)

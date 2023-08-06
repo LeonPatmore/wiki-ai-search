@@ -9,8 +9,11 @@ spec:
     app: {{ .Release.Name }}
   ports:
     - name: web-interface
-      port: 7860
-      targetPort: 7860
-    - name: rest-api
       port: 8080
       targetPort: 8080
+    - name: rest-api
+      port: 8082
+      targetPort: 8082
+    - name: slack-event-listener
+      port: 8084
+      targetPort: 8084

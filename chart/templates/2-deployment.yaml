@@ -18,9 +18,11 @@ spec:
           name: {{ .Release.Name }}
           ports:
             - name: web-interface
-              containerPort: 7860
-            - name: rest-api
               containerPort: 8080
+            - name: rest-api
+              containerPort: 8082
+            - name: slack-event-listener
+              containerPort: 8084
           volumeMounts:
             - mountPath: "/app/docs"
               name: docs

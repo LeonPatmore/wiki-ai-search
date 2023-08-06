@@ -4,10 +4,10 @@ metadata:
   name: {{ .Release.Name }}
   namespace: {{ .Release.Namespace | quote }}
   annotations:
-    kubernetes.io/ingress.class: ingress-controller-internal-nginx
+    kubernetes.io/ingress.class: ingress-controller-public-nginx
 spec:
   rules:
-    - host: {{ .Values.restApiHost }}
+    - host: {{ .Values.slackListenerHost }}
       http:
         paths:
           - path: /
@@ -16,4 +16,4 @@ spec:
               service:
                 name: {{ .Release.Name }}
                 port:
-                  number: 8080
+                  number: 8084

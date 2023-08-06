@@ -16,4 +16,4 @@ spec:
               service:
                 name: {{ .Release.Name }}
                 port:
-                  number: 7860
+                  number: 8080
