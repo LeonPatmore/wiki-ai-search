@@ -33,7 +33,7 @@ spec:
           volumeMounts:
             - mountPath: "/app/docs"
               name: docs
-              readOnly: true
+              readOnly: false
       volumes:
         - name: docs
           persistentVolumeClaim:
