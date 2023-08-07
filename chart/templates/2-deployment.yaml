@@ -19,6 +19,10 @@ spec:
           env:
             - name: OPENAI_API_KEY
               value: {{ .Values.openAiApiKey }}
+            - name: SLACK_CHANNEL
+              value: {{ .Values.slackChannel }}
+            - name: SLACK_TOKEN
+              value: {{ .Values.slackToken }}
           ports:
             - name: web-interface
               containerPort: 8080

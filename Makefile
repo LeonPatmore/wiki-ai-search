@@ -1,7 +1,7 @@
 include .env
 
 ROOT_DIR := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
-TAG := 0.0.1
+TAG := 0.0.2
 
 setup:
 	pipenv install
@@ -16,4 +16,4 @@ push:
 	docker push leonpatmore2/wiki-search:${TAG}
 
 install:
-	helm upgrade --install wiki-search chart --set tag=${TAG} --set openAiApiKey=${OPENAI_API_KEY} ${INSTALL_PARAMS}
+	helm upgrade --install wiki-search chart --set slackToken=${SLACK_TOKEN} --set slackChannel=${SLACK_CHANNEL} --set tag=${TAG} --set openAiApiKey=${OPENAI_API_KEY} ${INSTALL_PARAMS}
