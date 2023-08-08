@@ -1,6 +1,7 @@
 import json
 import logging
 from http.server import BaseHTTPRequestHandler
+from threading import Thread
 
 
 class SlackHandler(BaseHTTPRequestHandler):
@@ -31,12 +32,17 @@ class SlackHandler(BaseHTTPRequestHandler):
             self.send_response(200)
             self.end_headers()
             return
-        msg = self.wiki_search.search(slack_data["event"]["text"])
-        self.slack_client.chat_postMessage(channel=self.channel, text=msg, thread_ts=slack_data["event"]["ts"])
 
         self.send_response(200)
         self.send_header('Content-Type', 'text/plain')
         self.end_headers()
+
+        def send_slack_response():
+            msg = self.wiki_search.search(slack_data["event"]["text"])
+            self.slack_client.chat_postMessage(channel=self.channel, text=msg, thread_ts=slack_data["event"]["ts"])
+
+        send_res_thread = Thread(target=send_slack_response)
+        send_res_thread.start()
 
     def do_POST(self):
         content_length = int(self.headers['Content-Length'])

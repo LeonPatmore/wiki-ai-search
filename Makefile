@@ -1,7 +1,7 @@
 include .env
 
 ROOT_DIR := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
-TAG := 0.0.2
+TAG := 0.0.4
 
 setup:
 	pipenv install
